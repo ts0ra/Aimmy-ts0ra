@@ -8,6 +8,7 @@ using InputLogic;
 using Microsoft.Win32;
 using MouseMovementLibraries.ddxoftSupport;
 using MouseMovementLibraries.RazerSupport;
+using MouseMovementLibraries.ArduinoSupport;
 using Other;
 using System.Diagnostics;
 using System.IO;
@@ -259,6 +260,7 @@ namespace Aimmy2
                 "LG HUB" => 2,
                 "Razer Synapse (Require Razer Peripheral)" => 3,
                 "ddxoft Virtual Input Driver" => 4,
+                "Arduino" => 5,
                 _ => 0 // Default case if none of the above matches
             };
         }
@@ -807,6 +809,14 @@ namespace Aimmy2
             uiManager.DDI_ddxoft.Selected += async (sender, e) =>
             {
                 if (!await DdxoftMain.Load())
+                {
+                    SelectMouseEvent();
+                }
+            };
+            uiManager.DDI_Arduino = AddDropdownItem(uiManager.D_MouseMovementMethod, "Arduino");
+            uiManager.DDI_Arduino.Selected += (sender, e) =>
+            {
+                if (!ArduinoMain.Load())
                 {
                     SelectMouseEvent();
                 }
