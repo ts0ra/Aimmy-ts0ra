@@ -4,14 +4,13 @@ namespace MouseMovementLibraries.ArduinoSupport
 {
     internal class ArduinoMouse
     {
-        public static HidDevice? Arduino { get; set; }
-
         private const int MOUSE_LEFT = 0x01;
         private const int MOUSE_RIGHT = 0x02;
         private const int MOUSE_MIDDLE = 0x04;
         private const int MOUSE_ALL = MOUSE_LEFT | MOUSE_RIGHT | MOUSE_MIDDLE;
         
         private static int buttonsMask = 0;
+        public static HidDevice? Arduino;
 
         private static void SetButtons(int buttons)
         {

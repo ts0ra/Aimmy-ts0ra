@@ -1,4 +1,7 @@
-﻿using HidLibrary;
+﻿using Accord.Math.Distances;
+using HidLibrary;
+using System.Diagnostics;
+using System.Security.Policy;
 using System.Windows;
 using Visuality;
 
@@ -28,8 +31,17 @@ namespace MouseMovementLibraries.ArduinoSupport
             foreach (var dev in devices)
             {
                 dev.OpenDevice();
+
+                (short inputReport, short outputReport) = (dev.Capabilities.InputReportByteLength, dev.Capabilities.OutputReportByteLength);
+                if (inputReport != 65 && outputReport != 65)
+                {
+                    dev.CloseDevice();
+                    continue;
+                }
+
                 if (PING(dev, pingCode))
                 {
+                    new NoticeBar("Arduino loaded", 2000).Show();
                     ArduinoMouse.Arduino = dev;
                     return true;
                 }
