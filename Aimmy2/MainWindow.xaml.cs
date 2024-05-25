@@ -155,6 +155,7 @@ namespace Aimmy2
 
         private void Exit_Click(object sender, RoutedEventArgs e)
         {
+            ArduinoMain.Close();
             Application.Current.Shutdown();
         }
 

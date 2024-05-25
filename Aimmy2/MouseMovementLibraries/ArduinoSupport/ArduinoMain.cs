@@ -1,20 +1,36 @@
 ﻿using HidLibrary;
 using System.Windows;
-using Class;
+using Visuality;
 
 namespace MouseMovementLibraries.ArduinoSupport
 {
     internal class ArduinoMain
     {
+        public static void Close()
+        {
+            if (ArduinoMouse.Arduino != null)
+            {
+                ArduinoMouse.Arduino.CloseDevice();
+                ArduinoMouse.Arduino = null;
+            }
+        }
+
         public static bool Load(int pingCode = 0xf9)
         {
+            // Check if the Arduino is already loaded
+            if (ArduinoMouse.Arduino != null)
+            {
+                new NoticeBar("Arduino device already loaded", 2000).Show();
+                return true;
+            }
+
             var devices = HidDevices.Enumerate();
             foreach (var dev in devices)
             {
                 dev.OpenDevice();
-                if (CheckPing(dev, pingCode))
+                if (PING(dev, pingCode))
                 {
-                    Arduino.arduino = dev;
+                    ArduinoMouse.Arduino = dev;
                     return true;
                 }
                 else
@@ -26,7 +42,7 @@ namespace MouseMovementLibraries.ArduinoSupport
             return false;
         }
 
-        private static bool CheckPing(HidDevice dev, int pingCode)
+        private static bool PING(HidDevice dev, int pingCode)
         {
             dev.Write(new byte[] { 0, (byte)pingCode });
             try
