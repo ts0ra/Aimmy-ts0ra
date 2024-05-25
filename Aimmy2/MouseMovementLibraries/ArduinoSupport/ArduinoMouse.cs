@@ -49,11 +49,6 @@ namespace MouseMovementLibraries.ArduinoSupport
         {
             int limitedX = LimitXY(x);
             int limitedY = LimitXY(y);
-            var container = MakeReport(limitedX, limitedY);
-            foreach (var val in container)
-            {
-                Console.WriteLine(val);
-            }
             SendRawReport(MakeReport(limitedX, limitedY));
         }
 
