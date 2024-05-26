@@ -1,7 +1,4 @@
-﻿using Accord.Math.Distances;
-using HidLibrary;
-using System.Diagnostics;
-using System.Security.Policy;
+﻿using HidLibrary;
 using System.Windows;
 using Visuality;
 
